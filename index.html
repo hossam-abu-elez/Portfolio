@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hossam Abu-elez Fathy — Machine Learning Engineer</title>
+<meta name="description" content="Portfolio of Hossam Abu-elez Fathy, Machine Learning Engineer & Data Analyst — from digital logic to applied AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D1511;
+    --surface:#121C17;
+    --surface-2:#182620;
+    --line:#25352C;
+    --paper:#ECE7DA;
+    --muted:#8FA097;
+    --teal:#3ECF8E;
+    --teal-dim:#1F5A41;
+    --amber:#F0A868;
+    --amber-dim:#5C4526;
+    --radius:14px;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--teal);color:var(--ink);}
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--teal);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(13,21,17,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);}
+  .navlinks{display:flex;gap:28px;font-size:14px;color:var(--muted);}
+  .navlinks a{transition:color .2s;position:relative;}
+  .navlinks a:hover, .navlinks a.active{color:var(--paper);}
+  .navlinks a.active::after{content:'';position:absolute;left:0;right:0;bottom:-20px;height:2px;background:var(--teal);}
+  .navcta{font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid var(--line);padding:8px 16px;border-radius:8px;transition:.2s;}
+  .navcta:hover{border-color:var(--teal);color:var(--teal);}
+  .burger{display:none;background:none;border:none;color:var(--paper);font-size:22px;cursor:pointer;}
+  .mobilemenu{display:none;flex-direction:column;gap:2px;background:var(--surface);border-bottom:1px solid var(--line);}
+  .mobilemenu a{padding:14px 32px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);}
+  .mobilemenu.open{display:flex;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:170px 0 110px;
+    overflow:hidden;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:60px;align-items:center;}
+  .hero h1{font-size:clamp(34px,5vw,56px);line-height:1.08;margin-bottom:22px;}
+  .hero h1 .accent{color:var(--teal);}
+  .hero p.lede{font-size:17px;color:var(--muted);max-width:520px;margin-bottom:34px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px;}
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-size:13px;
+    padding:13px 22px;border-radius:9px;display:inline-flex;align-items:center;gap:8px;
+    transition:.2s;
+  }
+  .btn-primary{background:var(--teal);color:var(--ink);font-weight:500;}
+  .btn-primary:hover{background:#57e0a3;transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--line);color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--paper);}
+  .hero-stats{display:flex;gap:36px;flex-wrap:wrap;}
+  .stat{}
+  .stat .num{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:600;color:var(--teal);}
+  .stat .label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+  /* signal trace svg */
+  .trace-wrap{position:relative;height:340px;}
+  .trace-wrap svg{width:100%;height:100%;}
+  .trace-node{filter:drop-shadow(0 0 6px rgba(62,207,142,.7));}
+  .pulse{animation:travel 5.5s linear infinite;}
+  @keyframes travel{
+    0%{offset-distance:0%;}
+    100%{offset-distance:100%;}
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:96px 0;border-top:1px solid var(--line);}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:46px;gap:20px;flex-wrap:wrap;}
+  .sec-head h2{font-size:clamp(24px,3vw,32px);}
+  .sec-head .num{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:13px;}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;}
+  .about-grid p{color:var(--muted);font-size:16px;margin-bottom:16px;}
+  .about-grid p strong{color:var(--paper);font-weight:500;}
+  .facts{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;}
+  .facts dt{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-top:16px;}
+  .facts dt:first-child{margin-top:0;}
+  .facts dd{font-size:14px;color:var(--paper);margin-top:4px;}
+
+  /* ---------- STACK / JOURNEY ---------- */
+  .stack-line{position:relative;}
+  .stack-track{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;}
+  .stack-track::before{
+    content:'';position:absolute;top:19px;left:0;right:0;height:1px;
+    background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 12px);
+    z-index:0;
+  }
+  .stack-card{position:relative;z-index:1;}
+  .stack-node{width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-bottom:18px;}
+  .stack-card h3{font-size:16px;margin-bottom:8px;}
+  .stack-card p{font-size:13.5px;color:var(--muted);margin-bottom:12px;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);border:1px solid var(--line);padding:4px 9px;border-radius:6px;}
+
+  /* ---------- EXPERIENCE ---------- */
+  .xp-item{display:grid;grid-template-columns:200px 1fr;gap:32px;padding:28px 0;border-top:1px solid var(--line);}
+  .xp-item:first-of-type{border-top:none;}
+  .xp-meta .role{font-size:17px;font-weight:600;font-family:'Space Grotesk',sans-serif;margin-bottom:4px;}
+  .xp-meta .org{color:var(--teal);font-size:14px;}
+  .xp-meta .time{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:8px;}
+  .xp-body ul{padding-left:18px;color:var(--muted);font-size:14.5px;}
+  .xp-body li{margin-bottom:7px;}
+
+  /* ---------- FEATURED PROJECT ---------- */
+  .feature{
+    background:linear-gradient(155deg,var(--surface) 0%,var(--surface-2) 100%);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:44px;
+    position:relative;
+    overflow:hidden;
+  }
+  .feature::before{
+    content:'';position:absolute;top:-40%;right:-10%;width:420px;height:420px;
+    background:radial-gradient(circle,rgba(240,168,104,.14) 0%,transparent 70%);
+  }
+  .feature-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;margin-bottom:26px;position:relative;}
+  .feature-top h3{font-size:26px;}
+  .feature-top .sub{color:var(--amber);font-size:13px;font-family:'JetBrains Mono',monospace;margin-top:6px;}
+  .feature-metrics{display:flex;gap:28px;flex-wrap:wrap;}
+  .fm{text-align:right;}
+  .fm .n{font-family:'Space Grotesk',sans-serif;font-size:24px;color:var(--amber);font-weight:600;}
+  .fm .l{font-size:11px;color:var(--muted);}
+  .feature-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;position:relative;margin-top:10px;}
+  .feature-cols h4{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
+  .feature-cols p, .feature-cols li{font-size:14px;color:var(--muted);}
+  .feature-cols ul{padding-left:16px;}
+  .feature-cols li{margin-bottom:5px;}
+  .feature-tech{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;position:relative;}
+
+  /* ---------- PROJECT GRID ---------- */
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
+  .proj-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:.25s;}
+  .proj-card:hover{border-color:var(--teal);transform:translateY(-3px);}
+  .proj-card .pk{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:10px;}
+  .proj-card h3{font-size:17px;margin-bottom:10px;}
+  .proj-card p{font-size:13.5px;color:var(--muted);margin-bottom:14px;}
+
+  /* ---------- SKILLS ---------- */
+  .skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px;}
+  .skill-groups h4{font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .pill{font-size:12.5px;background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:20px;color:var(--paper);}
+
+  /* ---------- EDU / CERTS ---------- */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+  .edu-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:16px;}
+  .edu-card h3{font-size:16px;}
+  .edu-card .org{color:var(--teal);font-size:13.5px;margin-top:4px;}
+  .edu-card .meta{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:10px;}
+
+  /* ---------- VOLUNTEER ---------- */
+  .vol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .vol-card{border-left:2px solid var(--amber);padding-left:18px;}
+  .vol-card h3{font-size:15.5px;margin-bottom:6px;}
+  .vol-card p{color:var(--muted);font-size:13.5px;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact{text-align:center;padding:110px 0 60px;}
+  .contact h2{font-size:clamp(28px,4vw,42px);max-width:640px;margin:0 auto 20px;}
+  .contact p{color:var(--muted);max-width:480px;margin:0 auto 36px;}
+  .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:70px;}
+  footer{border-top:1px solid var(--line);padding:28px 0;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;flex-wrap:wrap;gap:10px;}
+
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .trace-wrap{height:220px;order:-1;}
+    .about-grid, .two-col{grid-template-columns:1fr;}
+    .stack-track{grid-template-columns:1fr 1fr;}
+    .stack-track::before{display:none;}
+    .xp-item{grid-template-columns:1fr;gap:10px;}
+    .navlinks{display:none;}
+    .burger{display:block;}
+  }
+  @media(max-width:560px){
+    .stack-track{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+    .feature{padding:26px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand"><span class="dot"></span>Hossam.AF</div>
+    <div class="navlinks">
+      <a href="#about" data-nav>About</a>
+      <a href="#stack" data-nav>Stack</a>
+      <a href="#experience" data-nav>Experience</a>
+      <a href="#projects" data-nav>Projects</a>
+      <a href="#skills" data-nav>Skills</a>
+      <a href="#education" data-nav>Education</a>
+    </div>
+    <a href="#contact" class="navcta">Contact →</a>
+    <button class="burger" id="burger">☰</button>
+  </nav>
+  <div class="mobilemenu" id="mobilemenu">
+    <a href="#about">About</a>
+    <a href="#stack">Stack</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">AI Sciences · New Mansoura University</div>
+        <h1>Engineering intelligence, <span class="accent">layer by layer.</span></h1>
+        <p class="lede">Hossam Abu-elez Fathy is a Machine Learning Engineer and Data Analyst who builds AI systems from the ground up — starting at digital logic and assembly, and working through to full-stack, production-shaped applications like an AI healthcare platform reaching 99.46% diagnostic accuracy.</p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn btn-primary">View projects →</a>
+          <a href="Hossam_Abu-elez_Fathy_Resume.pdf" class="btn btn-ghost" download>Download résumé</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="num">99.46%</div><div class="label">MedOptima model accuracy</div></div>
+          <div class="stat"><div class="num">3.5</div><div class="label">CGPA / 4.0</div></div>
+          <div class="stat"><div class="num">6+</div><div class="label">Shipped AI &amp; systems projects</div></div>
+        </div>
+      </div>
+      <div class="trace-wrap" aria-hidden="true">
+        <svg viewBox="0 0 360 340" fill="none">
+          <path id="tracepath" d="M20 300 L60 300 L60 260 L100 260 L100 320 L140 320 L140 220 Q 170 150 200 190 Q 230 230 260 130 Q 280 60 300 100 Q 320 140 340 60" stroke="#25352C" stroke-width="2"/>
+          <path d="M20 300 L60 300 L60 260 L100 260 L100 320 L140 320 L140 220 Q 170 150 200 190 Q 230 230 260 130 Q 280 60 300 100 Q 320 140 340 60" stroke="#3ECF8E" stroke-width="2" stroke-dasharray="6 10" opacity="0.55"/>
+          <circle cx="20" cy="300" r="4" fill="#3ECF8E" class="trace-node"/>
+          <circle cx="140" cy="220" r="4" fill="#3ECF8E" class="trace-node"/>
+          <circle cx="200" cy="190" r="4" fill="#F0A868" class="trace-node"/>
+          <circle cx="340" cy="60" r="5" fill="#3ECF8E" class="trace-node"/>
+          <circle r="5" fill="#ECE7DA" class="trace-node">
+            <animateMotion dur="5.5s" repeatCount="indefinite"
+              path="M20 300 L60 300 L60 260 L100 260 L100 320 L140 320 L140 220 Q 170 150 200 190 Q 230 230 260 130 Q 280 60 300 100 Q 320 140 340 60"/>
+          </circle>
+          <text x="14" y="322" fill="#8FA097" font-family="JetBrains Mono" font-size="10">LOGIC</text>
+          <text x="118" y="205" fill="#8FA097" font-family="JetBrains Mono" font-size="10">DATA</text>
+          <text x="300" y="48" fill="#8FA097" font-family="JetBrains Mono" font-size="10">AI</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="reveal">
+        <div class="eyebrow">About</div>
+        <h2 style="margin-bottom:22px;">A builder who starts at the hardware.</h2>
+        <p>Hossam is a Computer Science and Artificial Intelligence student at New Mansoura University with a habit of understanding systems from the bottom up — <strong>digital logic, assembly instruction sets, and object-oriented software design</strong> — before applying that grounding to machine learning.</p>
+        <p>That range shows up in his project history: an ALU built from logic gates, an airline reservation system designed with formal UML methodology, regression models for environmental data, and — most recently — <strong>MedOptima</strong>, an end-to-end AI healthcare platform that pairs neural networks with a working REST API and dashboard.</p>
+        <p>He completed a Machine Learning traineeship at Creativa Innovation Hub, and now mentors other students in AI and programming fundamentals while looking for his next internship or entry-level role in ML or data science.</p>
+      </div>
+      <div class="facts reveal">
+        <dl>
+          <dt>Based in</dt><dd>Mansoura, Egypt</dd>
+          <dt>Studying</dt><dd>AI Sciences, New Mansoura University (2023 – 2027)</dd>
+          <dt>Currently</dt><dd>Seeking ML / Data Science internships</dd>
+          <dt>Languages</dt><dd>Arabic (native), English (proficient)</dd>
+          <dt>Core tools</dt><dd>Python, Scikit-Learn, SQL, Power BI</dd>
+          <dt>Email</dt><dd>7ossamabuelez@gmail.com</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK / JOURNEY -->
+  <section id="stack">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>The stack, end to end</h2>
+        <div class="num">01 / silicon → 04 / intelligence</div>
+      </div>
+      <div class="stack-track reveal">
+        <div class="stack-card">
+          <div class="stack-node">01</div>
+          <h3>Hardware &amp; logic</h3>
+          <p>4-bit ALU design and 8085/8086 assembly — where every instruction and control signal is explicit.</p>
+          <div class="tag-row"><span class="tag">Digital logic</span><span class="tag">Assembly</span></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-node">02</div>
+          <h3>Software engineering</h3>
+          <p>UML-modeled systems like an airline reservation platform, built with OOP and database integration.</p>
+          <div class="tag-row"><span class="tag">OOP</span><span class="tag">SQL</span></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-node">03</div>
+          <h3>Data &amp; analysis</h3>
+          <p>Cleaning, feature engineering and EDA on real-world datasets, visualized with Plotly and Power BI.</p>
+          <div class="tag-row"><span class="tag">Pandas</span><span class="tag">EDA</span></div>
+        </div>
+        <div class="stack-card">
+          <div class="stack-node">04</div>
+          <h3>Applied AI</h3>
+          <p>Neural networks, optimization algorithms and REST APIs shipped as working, full-stack AI products.</p>
+          <div class="tag-row"><span class="tag">Neural nets</span><span class="tag">REST APIs</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Experience</h2>
+        <div class="num">2025</div>
+      </div>
+      <div class="xp-item reveal">
+        <div class="xp-meta">
+          <div class="role">Machine Learning Trainee</div>
+          <div class="org">Creativa Innovation Hub, Mansoura</div>
+          <div class="time">Jun 2025 – Aug 2025</div>
+        </div>
+        <div class="xp-body">
+          <ul>
+            <li>Preprocessed real-world datasets with Pandas and NumPy ahead of modeling.</li>
+            <li>Built and evaluated classification and regression models with Scikit-Learn.</li>
+            <li>Ran feature engineering and systematic model evaluation to improve results.</li>
+            <li>Visualized findings for stakeholders using Matplotlib and Plotly.</li>
+            <li>Collaborated within a team on applied machine learning projects end to end.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Featured project</h2>
+        <div class="num">MedOptima</div>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature-top">
+          <div>
+            <h3>MedOptima AI Platform</h3>
+            <div class="sub">AI healthcare decision-support system</div>
+          </div>
+          <div class="feature-metrics">
+            <div class="fm"><div class="n">99.46%</div><div class="l">Test accuracy</div></div>
+            <div class="fm"><div class="n">41</div><div class="l">Diseases covered</div></div>
+            <div class="fm"><div class="n">117</div><div class="l">Symptoms modeled</div></div>
+          </div>
+        </div>
+        <div class="feature-cols">
+          <div>
+            <h4>Problem &amp; goal</h4>
+            <p>Clinicians and patients often lack a fast, data-backed first read on symptoms. The goal was a decision-support tool that could suggest likely conditions from reported symptoms, accurately enough to be genuinely useful as a first pass.</p>
+          </div>
+          <div>
+            <h4>Solution</h4>
+            <p>A neural network trained on a 41-disease, 117-symptom Kaggle dataset, wrapped in knowledge-based reasoning and optimization logic, then exposed through a REST API and an interactive analytics dashboard.</p>
+          </div>
+          <div>
+            <h4>Role &amp; approach</h4>
+            <ul>
+              <li>End-to-end build: data preprocessing, feature engineering, model tuning</li>
+              <li>Designed the REST API and full-stack architecture</li>
+              <li>Applied formal software engineering methodology for scalability</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Result</h4>
+            <p>A working full-stack platform achieving 99.46% test accuracy, demonstrating that a student-built system can combine ML rigor with genuine software engineering discipline.</p>
+          </div>
+        </div>
+        <div class="feature-tech">
+          <span class="tag">Python</span><span class="tag">Scikit-Learn</span><span class="tag">Neural Networks</span><span class="tag">REST API</span><span class="tag">SQL</span><span class="tag">Full-Stack</span>
+        </div>
+      </div>
+
+      <div style="height:26px;"></div>
+
+      <div class="proj-grid reveal">
+        <div class="proj-card">
+          <div class="pk">2024 – 2025 · Regression</div>
+          <h3>Air Quality Prediction</h3>
+          <p>Cleaned environmental datasets and built regression models to forecast air quality, with EDA and evaluation across multiple metrics, visualized in Plotly dashboards.</p>
+          <div class="tag-row"><span class="tag">Python</span><span class="tag">EDA</span><span class="tag">Plotly</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="pk">2025 · Optimization research</div>
+          <h3>FTT Optimization Algorithm</h3>
+          <p>Designed the Football Team Training (FTT) optimization algorithm to solve supply chain problems, benchmarking convergence and solution quality against existing methods.</p>
+          <div class="tag-row"><span class="tag">Optimization</span><span class="tag">Research</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="pk">2023 – 2024 · Software engineering</div>
+          <h3>Airline Reservation System</h3>
+          <p>Modeled system requirements with use-case, class and sequence diagrams, then built the architecture with database integration under formal UML and OOP methodology.</p>
+          <div class="tag-row"><span class="tag">UML</span><span class="tag">OOP</span><span class="tag">Databases</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="pk">2024 · Computer architecture</div>
+          <h3>ALU 4-bit Digital Design</h3>
+          <p>Designed and simulated a 4-bit ALU supporting arithmetic and logical operations using digital logic and control signals.</p>
+          <div class="tag-row"><span class="tag">Digital logic</span><span class="tag">Simulation</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="pk">2024 · Low-level systems</div>
+          <h3>8085 &amp; 8086 Assembly</h3>
+          <p>Built fluency in low-level, instruction-level execution through assembly programming, simulation, and step-by-step trace analysis.</p>
+          <div class="tag-row"><span class="tag">Assembly</span><span class="tag">Architecture</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Technical skills</h2>
+        <div class="num">by category</div>
+      </div>
+      <div class="skill-groups reveal">
+        <div>
+          <h4>Machine learning</h4>
+          <div class="pill-row">
+            <span class="pill">Supervised learning</span><span class="pill">Unsupervised learning</span><span class="pill">Deep learning</span><span class="pill">Neural networks</span><span class="pill">Feature engineering</span><span class="pill">Model evaluation</span>
+          </div>
+        </div>
+        <div>
+          <h4>Languages &amp; libraries</h4>
+          <div class="pill-row">
+            <span class="pill">Python</span><span class="pill">C++</span><span class="pill">Scikit-Learn</span><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">Matplotlib</span><span class="pill">Plotly</span>
+          </div>
+        </div>
+        <div>
+          <h4>Data &amp; databases</h4>
+          <div class="pill-row">
+            <span class="pill">Excel</span><span class="pill">Power BI</span><span class="pill">EDA</span><span class="pill">SQL</span><span class="pill">MySQL</span><span class="pill">PostgreSQL</span>
+          </div>
+        </div>
+        <div>
+          <h4>Software engineering</h4>
+          <div class="pill-row">
+            <span class="pill">REST APIs</span><span class="pill">Git / GitHub</span><span class="pill">OOP</span><span class="pill">Full-Stack Dev</span><span class="pill">Jupyter</span><span class="pill">VS Code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION / CERTS -->
+  <section id="education">
+    <div class="wrap two-col">
+      <div class="reveal">
+        <div class="eyebrow">Education</div>
+        <div class="edu-card">
+          <h3>B.Sc. Artificial Intelligence Sciences</h3>
+          <div class="org">New Mansoura University</div>
+          <div class="meta">Oct 2023 – Jun 2027 · CGPA 3.5 / 4.0</div>
+        </div>
+        <div class="eyebrow" style="margin-top:36px;">Certificates</div>
+        <div class="edu-card">
+          <h3>Machine Learning Training</h3>
+          <div class="org">Creativa Innovation Hub</div>
+          <div class="meta">Jun 2025</div>
+        </div>
+        <div class="edu-card">
+          <h3>Transact-SQL Queries Using SQL Server</h3>
+          <div class="org">Mahara Tech</div>
+          <div class="meta">Mar 2025</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="eyebrow">Volunteering</div>
+        <div class="vol-grid">
+          <div class="vol-card">
+            <h3>Student mentor — AI &amp; programming</h3>
+            <p>Helps students and beginners understand AI and programming fundamentals through hands-on mentoring and guidance.</p>
+          </div>
+          <div class="vol-card">
+            <h3>Tech event organizer</h3>
+            <p>Coordinates AI and technology workshops for students, managing logistics for a smooth learning experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="border-top:none;">
+    <div class="wrap contact reveal">
+      <div class="eyebrow" style="justify-content:center;">Get in touch</div>
+      <h2>Open to Machine Learning and Data Science internships.</h2>
+      <p>Have a role, project, or research opportunity in mind? Reach out directly — replies usually come within a day or two.</p>
+      <div class="contact-links">
+        <a href="mailto:7ossamabuelez@gmail.com" class="btn btn-primary">Email me →</a>
+        <a href="tel:+201004937607" class="btn btn-ghost">+20 100 493 7607</a>
+        <a href="https://github.com/" class="btn btn-ghost">GitHub</a>
+        <a href="https://linkedin.com/" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div>© 2026 Hossam Abu-elez Fathy</div>
+  <div>Mansoura, Egypt</div>
+</footer>
+
+<script>
+  // mobile menu
+  const burger = document.getElementById('burger');
+  const mobilemenu = document.getElementById('mobilemenu');
+  burger.addEventListener('click', () => mobilemenu.classList.toggle('open'));
+  mobilemenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobilemenu.classList.remove('open')));
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // active nav link
+  const sections = document.querySelectorAll('section[id]');
+  const navA = document.querySelectorAll('[data-nav]');
+  const navIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navA.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => navIo.observe(s));
+</script>
+</body>
+</html>
